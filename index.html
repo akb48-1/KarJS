@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="./kar.js"></script>
+	<style type="text/css">
+		.blue {background-color:blue;}
+
+	</style>
+</head>
+<body>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<div style="width:150px;height:150px;border:1px solid #000;margin-left:200px;background-color:#fff;" class="app"></div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<script type="text/javascript">
+		var body = $('body');
+		console.log(body)
+		function a () {
+			var state = kar.canView('.app');
+			if (state) {
+				body.toggleClass('blue');
+				return;
+			};
+			body.toggleClass('blue');
+		}
+		window.addEventListener('scroll', a, false)
+	</script>
+</body>
+</html>

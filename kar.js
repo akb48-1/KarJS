@@ -24,10 +24,9 @@
 //  	}
 // };
 
-var $ = Kar = function (argums) {
+var $ = function (argums) {
 	return new kar(argums);
-
-}
+};
 
 function kar(argums) {
 	//创建一个存放元素的数组
@@ -174,13 +173,13 @@ kar.prototype.on = function (type) {
 
 //添加指定的className
 kar.prototype.addClass = function (className) {
-
 	var exp = new RegExp("\\b" + className + "\\b", "g");
 	var newClasss = '';
 
 	for (var i = 0; i < this.elements.length; i++) {
-		if (this.elements[i].className.search(exp) !== -1) {
+		if (this.elements[i].className.search(exp) === -1) {
 			this.elements[i].className += ' ' + className;
+			console.log(this.elements[i].className)
 		} else return false;
 	};
 };
@@ -189,8 +188,15 @@ kar.prototype.addClass = function (className) {
 kar.prototype.removeClass = function (className) {
 
 	for (var i = 0; i < this.elements.length; i++) {
+		console.log(this.elements[i].className)
 		var tempClasss = this.elements[i].className.split(/\s+/);
-		tempClasss.del(className);
+		console.log(tempClasss)
+		var index = tempClasss.indexOf(className);
+		console.log(index, tempClasss)
+		if (index >= 0) {
+			tempClasss.splice(index, 1)
+		} 
+		console.log(tempClasss)
 		this.elements[i].className = tempClasss.join();
 	};
 };
@@ -200,9 +206,9 @@ kar.prototype.toggleClass = function (className) {
 	var exp = new RegExp("\\b" + className + "\\b", "g");
 	var newClasss = '';
 	for (var i = 0; i < this.elements.length; i++) {
-		var tempClasss = this.elements[i].className.split(/\s+/);
+		var classArr = this.elements[i].className.split(/\s+/);
 		if (this.elements[i].className.search(exp) !== -1) {
-			newClasss = Abs.del(className, tempClasss);
+			newClasss = kar.del(className, classArr);
 			this.elements[i].className = newClasss.join(' ');
 		} else {
 			this.elements[i].className += ' ' + className;
@@ -428,7 +434,7 @@ kar.setCookie = function (name, value, maxAge) {		//maxAge为天数
 }
 
 
-kar.canView = function (el, option) {
+kar.canView = function (element, option) {
 
 	var option = option ? option : {};
 	// var ON_SCREEN_HEIGHT = 0;
@@ -440,12 +446,14 @@ kar.canView = function (el, option) {
 
 	var isOnScreen = (function () {
 
-		var rect = $(el)[0].getBoundingClientRect();
+		var el = $(element).elements[0];
+		console.log(el)
+		var rect = el.getBoundingClientRect();
 		var windowHeight = window.innerHeight || document.documentElement.clientHeight;	//可视区域高度
 		var windowWidth = window.innerWidth || document.documentElement.clientWidth;	//可视区域宽度
 
-		var elementHeight = $(el)[0].offsetHeight;	//元素高度
-		var elementWidth = $(el)[0].offsetWidth;	//元素宽度
+		var elementHeight = el.offsetHeight;	//元素高度
+		var elementWidth = el.offsetWidth;	//元素宽度
 
 		var onScreenHeight = ON_SCREEN_HEIGHT > elementHeight ? elementHeight : ON_SCREEN_HEIGHT; //元素完整显示在可视区域内
 		var onScreenWidth = ON_SCREEN_WIDTH > elementWidth ? elementWidth : ON_SCREEN_WIDTH;	//元素完整显示在可视区域内
@@ -471,4 +479,10 @@ kar.canView = function (el, option) {
 	return isOnScreen;
 };
 
+kar.del = function (member ,array) {
 
+	if (!kar.isArray(array)) return false;
+	var index = array.indexOf(member);
+	index >= 0 && array.splice(index, 1);
+	return array;
+};
