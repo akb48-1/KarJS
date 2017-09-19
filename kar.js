@@ -420,7 +420,7 @@ kar.isChildNode = function (childNode, parentNode) {
 kar.setCookie = function (name, value, maxAge) {		//maxAge为天数
 	var cookie = name + '=' + encodeURIComponent(value);
 	if (kar.isNumber(maxAge)) {
-		var c = cookie += ';max-age=' + maxAge * 24 * 60 * 60 + ';path=/;domain=.163.com';
+		cookie += ';max-age=' + maxAge * 24 * 60 * 60 + ';path=/;';
 	};
 	document.cookie = cookie;
 }
