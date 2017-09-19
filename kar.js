@@ -179,7 +179,6 @@ kar.prototype.addClass = function (className) {
 	for (var i = 0; i < this.elements.length; i++) {
 		if (this.elements[i].className.search(exp) === -1) {
 			this.elements[i].className += ' ' + className;
-			console.log(this.elements[i].className)
 		} else return false;
 	};
 };
@@ -188,16 +187,9 @@ kar.prototype.addClass = function (className) {
 kar.prototype.removeClass = function (className) {
 
 	for (var i = 0; i < this.elements.length; i++) {
-		console.log(this.elements[i].className)
 		var tempClasss = this.elements[i].className.split(/\s+/);
-		console.log(tempClasss)
-		var index = tempClasss.indexOf(className);
-		console.log(index, tempClasss)
-		if (index >= 0) {
-			tempClasss.splice(index, 1)
-		} 
-		console.log(tempClasss)
-		this.elements[i].className = tempClasss.join();
+		var newClassArr = kar.del(className, tempClasss);
+		this.elements[i].className = newClassArr.join();
 	};
 };
 
@@ -285,7 +277,7 @@ $.ajax = function (params) {
 
 	};
 
-	$.ajax.jsonp = function (params) {
+	function jsonp(params) {
 		var callbackName = params.callbackName || 'callback';
 		params.data['callback'] = callbackName;
 		var data = $.ajax.formatParams(params.data);
@@ -319,18 +311,18 @@ $.ajax = function (params) {
 
 
 
-	$.ajax.formatParams = function (obj) {	//格式化data
+	function formatParams(obj) {	//格式化data
 		var arr = [],
 			str = '';
 		for (var key in obj) {
 			arr.push(key + '=' + obj[key]);
 		};
-		arr.push('v=' + $.ajax.random());
+		arr.push('v=' + random());
 		str = arr.join('&');
 		return str;
 	};
 
-	$.ajax.random = function () {
+	function random() {
 		return Math.floor(Math.random() * 100000 + 666);
 	}
 };
@@ -447,7 +439,6 @@ kar.canView = function (element, option) {
 	var isOnScreen = (function () {
 
 		var el = $(element).elements[0];
-		console.log(el)
 		var rect = el.getBoundingClientRect();
 		var windowHeight = window.innerHeight || document.documentElement.clientHeight;	//可视区域高度
 		var windowWidth = window.innerWidth || document.documentElement.clientWidth;	//可视区域宽度

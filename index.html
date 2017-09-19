@@ -14,15 +14,14 @@
 	<div style="width:150px;height:150px;border:1px solid #000;margin-left:200px;background-color:#fff;" class="app"></div>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<script type="text/javascript">
-		var body = $('body');
-		console.log(body)
+		var app = $('.app');
 		function a () {
 			var state = kar.canView('.app');
 			if (state) {
-				body.toggleClass('blue');
+				app.addClass('blue');
 				return;
 			};
-			body.toggleClass('blue');
+			app.removeClass('blue');
 		}
 		window.addEventListener('scroll', a, false)
 	</script>
