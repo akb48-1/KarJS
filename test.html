@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="item">
+        <div class="list">
+            <label><input type="radio" name="a" value="男" />111</label>
+            <label><input type="radio" name="a" value="女" />222</label>
+        </div>
+        <div class="list">
+            <label><input type="checkbox" name="a3"  value="在" />333</label>
+            <label><input type="checkbox" name="a3"  value="这" />444</label>
+            <select name="se" id="select">
+                <option value="undefined">请选择</option>
+                <option value="1">11111</option>
+                <option value="2">2222</option>
+            </select>
+            <textarea name="text" id="" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <button class="submit">提交</button>
+    <script src="./jquery-2.1.4.min.js"></script>
+    <script>
+
+        var data = {};
+        var dataName = {
+            a: '性别',
+            a3: '爱好',
+            se: '年龄',
+            text: '想发的牢骚'
+        };
+        (function initial(data) {
+            $('.list input, .list select, .list textarea').each(function (i, obj) {
+                var name = $(obj).prop('name');
+                if(!data[name]) {
+                    data[name] = undefined;
+                }
+            });
+        })(data)
+        console.log(data);
+
+        $('.list select').on('change', function () {
+            var name = $(this).prop('name');
+            data[name] = $(this).val();
+        });
+
+        $('.list textarea').on('keyup', function () {
+            var name = $(this).prop('name');
+            data[name] = $(this).val();
+            console.log(data[name])
+        });
+
+        function getValue() {
+
+            $('.list input[type=radio]:checked').each(function (i, obj) {
+                var name = $(obj).prop('name');
+                var val = $(obj).val();
+
+                data[name] = val;
+            });
+
+            var valStr = '';
+            $('.list input[type=checkbox]:checked').each(function (i, obj) {
+                var name = $(obj).prop('name');
+                var val = $(obj).val();
+
+                if(!data[name]) {
+                    data[name] = val;
+                } else {
+                    valStr += val + ',';
+                    data[name] = valStr.substring(0, valStr.length - 1);
+                };
+            });
+
+            return data;
+        };
+
+        $('.submit').on('click', function () {
+            console.log(getValue());
+
+            for (var key in data) {
+                console.log(data[key])
+                if (!data[key]) {
+                    alert(dataName[key] + ' 不能为空');
+                    return;
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
